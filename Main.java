@@ -14,8 +14,7 @@ public class Main {
         Hash alunohash = new Hash(tam_vetor, max);
         int opcao;
         int ra;
-        String nome;
-        boolean busca = false;
+        boolean busca = true;
 
         do {
             System.out.println("Digite 0 para parar o algoritmo!");
@@ -28,25 +27,21 @@ public class Main {
             if (opcao == 1) {
                 System.out.println("Qual e o RA do aluno?");
                 ra = scanner.nextInt();
-                System.out.println("Qual e o nome do aluno?");
-                scanner.nextLine(); // Limpa o buffer
-                nome = scanner.nextLine();
-                Aluno aluno = new Aluno(ra, nome);
+                Aluno aluno = new Aluno(ra);
                 alunohash.inserir(aluno);
             } else if (opcao == 2) {
                 System.out.println("Qual e o RA do aluno a ser removido?");
                 ra = scanner.nextInt();
-                Aluno aluno = new Aluno(ra, " ");
+                Aluno aluno = new Aluno(ra);
                 alunohash.deletar(aluno);
             } else if (opcao == 3) {
                 System.out.println("Qual e o RA do aluno a ser buscado?");
                 ra = scanner.nextInt();
-                Aluno aluno = new Aluno(ra, " ");
+                Aluno aluno = new Aluno(ra);
                 alunohash.buscar(aluno, busca);
                 if (busca) {
                     System.out.println("Aluno encontrado:");
-                    System.out.println("RA: " + aluno.obterRa());
-                    System.out.println("Nome: " + aluno.obterNome());
+                    System.out.println("RA: " + aluno.getRa());
                 } else {
                     System.out.println("Aluno nao encontrado!");
                 }
