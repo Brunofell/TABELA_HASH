@@ -1,3 +1,5 @@
+package homogenea;
+
 public class Aluno {
     private int ra;
 
