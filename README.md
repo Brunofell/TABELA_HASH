@@ -13,9 +13,11 @@ Se o usuário escolher a opção 1, INSERIR, ele poderá inserir um número inte
 </p>
 
 <br>
-
 <p align="center">
-<img src="/Assets/inserir.png">
+<img src="/assets/menu.png">
+</p>
+<p align="center">
+<img src="/assets/inserir.png">
 </p>
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
 Na opção 2, o user poderá remover um elemento da tabela:
