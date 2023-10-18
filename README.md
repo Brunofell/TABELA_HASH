@@ -13,9 +13,7 @@ Se o usuário escolher a opção 1, INSERIR, ele poderá inserir um número inte
 </p>
 
 <br>
-<p align="center">
-<img src="/assets/menu.png">
-</p>
+
 <p align="center">
 <img src="/Assets/inserir.png">
 </p>
