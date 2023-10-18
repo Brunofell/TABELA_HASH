@@ -21,7 +21,6 @@ public class Main {
             }
         }while (tam_vetor <= 0);
             Hash alunohash = new Hash(tam_vetor);
-
             HashHetero hashTable = new HashHetero(tam_vetor); // criou a hash desse tamanho ai
         int opcao;
         int num;
