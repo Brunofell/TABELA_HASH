@@ -1,6 +1,5 @@
-import heterogenea.AlunoHetero;
-import heterogenea.HashHetero;
-import homogenea.Aluno;
+import Heterogenea.HashHetero;
+import homogenea.Chave;
 import homogenea.Hash;
 
 import java.util.Scanner;
@@ -14,13 +13,14 @@ public class Main {
         System.out.println("- Programa gerador de Hash! -");
         System.out.println("- Digite o tamanho da Hash! -");
         System.out.println("-----------------------------");
-        System.out.print(">>");
+        System.out.print(">> ");
         int tam_vetor = scanner.nextInt(); // 3
 
         Hash alunohash = new Hash(tam_vetor);
-        HashHetero alunoHashHet = new HashHetero(tam_vetor);
+        HashHetero hashTable = new HashHetero(tam_vetor); // criou a hash desse tamanho ai
+
         int opcao;
-        int ra;
+        int num;
         boolean busca = true;
 
         System.out.println("- Qual metodo de colisão quer testar?");
@@ -35,32 +35,43 @@ public class Main {
                 System.out.println("- Digite [0] para PARAR o algoritmo!     - ");
                 System.out.println("- Digite [1] para INSERIR um elemento!   - ");
                 System.out.println("- Digite [2] para REMOVER um elemento!   - ");
-                System.out.println("- Digite [3] para BUSCAR um elemento!     - ");
+                System.out.println("- Digite [3] para BUSCAR um elemento!    - ");
                 System.out.println("- Digite [4] para IMPRIMIR a hash!       - ");
                 System.out.println("------------------------------------------ ");
                 System.out.print(">> ");
                 opcao = scanner.nextInt();
 
                 if (opcao == 1) {
-                    System.out.print("Qual e o RA do aluno: ");
-                    ra = scanner.nextInt();
-                    Aluno aluno = new Aluno(ra);
-                    alunohash.inserir(aluno);
+                    System.out.println("Qual número vai INSERIR? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    Chave chave = new Chave(num);
+                    alunohash.inserir(chave);
                 } else if (opcao == 2) {
-                    System.out.print("Qual e o RA do aluno a ser removido: ");
-                    ra = scanner.nextInt();
-                    Aluno aluno = new Aluno(ra);
-                    alunohash.deletar(aluno);
+                    System.out.println("Qual número vai REMOVER? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    Chave chave = new Chave(num);
+                    alunohash.deletar(chave);
                 }else if (opcao == 3) {
-                    System.out.print("Qual é o RA do aluno a ser buscado: ");
-                    ra = scanner.nextInt();
-                    Aluno aluno = new Aluno(ra);
-                    int indiceEncontrado = alunohash.buscar(aluno);
+                    System.out.println("Qual número vai BUSCAR? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    Chave chave = new Chave(num);
+                    long startTime = System.nanoTime();
+                    int indiceEncontrado = alunohash.buscar(chave);
 
                     if (indiceEncontrado != -1) {
-                        System.out.println("Aluno encontrado na posição " + indiceEncontrado + " na tabela hash.");
+                        System.out.println("Número encontrado na posição " + indiceEncontrado + " na tabela hash.");
+                        long endTime = System.nanoTime();
+                        long timeElapsed = endTime - startTime;
+                        System.out.println("Tempo de execução em nanossegundos: " + timeElapsed);
+
                     } else {
-                        System.out.println("Aluno não encontrado na tabela hash.");
+                        System.out.println("Número não encontrado na tabela hash.");
+                        long endTime = System.nanoTime();
+                        long timeElapsed = endTime - startTime;
+                        System.out.println("Tempo de execução em nanossegundos: " + timeElapsed);
                     }
                 } else if (opcao == 4) {
                     alunohash.imprimir();
@@ -70,39 +81,35 @@ public class Main {
 
             scanner.close();
         }else if(metodo == 2){
-            do {
-                System.out.println("Digite 0 para parar o algoritmo!");
-                System.out.println("Digite 1 para inserir um elemento!");
-                System.out.println("Digite 2 para remover um elemento!");
-                System.out.println("Digite 3 para busca um elemento!");
-                System.out.println("Digite 4 para imprimir a Hash!");
+
+            do{
+                System.out.println("------------------------------------------ ");
+                System.out.println("- Digite [0] para PARAR o algoritmo!     - ");
+                System.out.println("- Digite [1] para INSERIR um elemento!   - ");
+                System.out.println("- Digite [2] para REMOVER um elemento!   - ");
+                System.out.println("- Digite [3] para BUSCAR um elemento!    - ");
+                System.out.println("- Digite [4] para IMPRIMIR a hash!       - ");
+                System.out.println("------------------------------------------ ");
+                System.out.print(">> ");
                 opcao = scanner.nextInt();
 
-                if (opcao == 1) {
-                    System.out.println("Qual é o RA do aluno?");
-                    ra = scanner.nextInt();
-                    AlunoHetero alunoH = new AlunoHetero(ra, 0);
-                    alunoHashHet.inserirH(alunoH);
-                } else if (opcao == 2) {
-                    System.out.println("Qual é o RA do aluno a ser removido?");
-                    ra = scanner.nextInt();
-                    AlunoHetero alunoH = new AlunoHetero(ra, 0);
-                    alunoHashHet.deletarH(alunoH);
-                } else if (opcao == 3) {
-                    System.out.println("Qual é o RA do aluno a ser buscado?");
-                    ra = scanner.nextInt();
-                    AlunoHetero aluno = new AlunoHetero(ra, 0); // Crie um novo objeto Aluno com a chave aleatória
-                    boolean[] buscaArray = new boolean[1];
-                    alunoHashHet.buscarH(aluno, buscaArray);
-                    if (buscaArray[0]) {
-                        System.out.println("RA encontrado:");
-                        System.out.println("RA: " + aluno.getRa());
-                    } else {
-                        System.out.println("Aluno não encontrado!");
-                    }
-
-                } else if (opcao == 4) {
-                    alunoHashHet.imprimirH();
+                if(opcao == 1){
+                    System.out.println("Qual número vai INSERIR? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    hashTable.inserir(num);
+                } else if(opcao == 2){
+                    System.out.println("Qual número vai REMOVER? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    hashTable.deletar(num);
+                } else if(opcao == 3){
+                    System.out.println("Qual número vai BUSCAR? ");
+                    System.out.print(">> ");
+                    num = scanner.nextInt();
+                    hashTable.buscar(num);
+                } else if(opcao == 4){
+                    hashTable.imprimir();
                 }
 
             } while (opcao != 0);
@@ -111,5 +118,3 @@ public class Main {
         }
     }
 }
-
-

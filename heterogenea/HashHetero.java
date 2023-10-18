@@ -1,101 +1,104 @@
-package heterogenea;
+package Heterogenea;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 
 public class HashHetero {
-    private ArrayList<LinkedList<AlunoHetero>> estrutura;
-    private int max_itens;
-    private int max_posicoes;
-    private double fatorDeCarga = 0.7; // da pra ajustar se precisar (eu ainda não entendi isso direito)
+    private int[] tabelaHash;
+    private List<Integer> tabelaExtra;
+    private int tamanho;
 
-    public HashHetero(int tam_vetor) {
-        max_posicoes = tam_vetor;
-        estrutura = new ArrayList<LinkedList<AlunoHetero>>(tam_vetor);
+    public HashHetero(int tamanho) {
+        this.tamanho = tamanho;
+        tabelaHash = new int[tamanho];
+        tabelaExtra = new ArrayList<>();
+        inicializarTabela();
+    }
 
-        for (int i = 0; i < tam_vetor; i++) {
-            estrutura.add(new LinkedList<AlunoHetero>());
+    private void inicializarTabela() {
+        for (int i = 0; i < tamanho; i++) {
+            tabelaHash[i] = -1;
         }
     }
 
-    public void inserirH(AlunoHetero aluno) {
-        if ((double) quantidadeItens() / max_posicoes >= fatorDeCarga) {
-            redimensionar();
-        }
-
-        int local = FuncaoHash(aluno);
-        LinkedList<AlunoHetero> lista = estrutura.get(local);
-
-        lista.add(aluno);
+    private int funcaoHash(int chave) {
+        return chave % tamanho;
     }
 
-    public void deletarH(AlunoHetero aluno) {
-        int local = FuncaoHash(aluno);
-        LinkedList<AlunoHetero> lista = estrutura.get(local);
-
-        lista.removeIf(a -> a.getRa() == aluno.getRa());
-    }
-
-    public void buscarH(AlunoHetero aluno, boolean[] busca) {
-        int local = FuncaoHash(aluno);
-        LinkedList<AlunoHetero> lista = estrutura.get(local);
-        busca[0] = false;
-
-        for (AlunoHetero a : lista) {
-            if (a.getRa() == aluno.getRa()) {
-                busca[0] = true;
-                aluno.copyFrom(a);
-                break;
-            }
+    public void inserir(int numero) {
+        int valor = funcaoHash(numero);
+        if (tabelaHash[valor] == -1) {
+            tabelaHash[valor] = numero;
+        } else {
+            tabelaExtra.add(numero);
         }
     }
 
-    public void imprimirH() {
-        System.out.println("Tabela homogenea.Hash:");
-        for (int i = 0; i < max_posicoes; i++) {
-            LinkedList<AlunoHetero> lista = estrutura.get(i);
-            if (!lista.isEmpty()) {
-                System.out.println("Posição " + i + ":");
-                for (AlunoHetero a : lista) {
-                    System.out.println("RA: " + a.getRa());
-                }
-            }
-        }
-    }
-
-    public int FuncaoHash(AlunoHetero aluno) {
-        int ra = aluno.getRa();
-        return (ra & 0x7FFFFFFF) % max_posicoes;
-        //  0x7FFFFFFF para garantir um valor não negativo (o chatgpt botou isso no lugar do calculo
-        // e deu certo melhor do que qnd tinha calculo. Vai entender, isso não é de Deus.
-    }
-
-
-    //Aqui caso a tabela esteja completa e vc adicione um novo valor ela vai expandir a tabela. Ainda tem uns bug pra arrumar
-    private void redimensionar() {
-        int novoTamanho = max_posicoes * 2;
-        ArrayList<LinkedList<AlunoHetero>> novaEstrutura = new ArrayList<>(novoTamanho);
-
-        for (int i = 0; i < novoTamanho; i++) {
-            novaEstrutura.add(new LinkedList<>());
-        }
-
-        for (LinkedList<AlunoHetero> lista : estrutura) {
-            for (AlunoHetero aluno : lista) {
-                int novaPosicao = FuncaoHash(aluno);
-                novaEstrutura.get(novaPosicao).add(aluno);
+    public void deletar(int numero) {
+        for (int i = 0; i < tamanho; i++) {
+            if (tabelaHash[i] == numero) {
+                tabelaHash[i] = -2;
+                System.out.println("O elemento " + numero + " foi deletado da tabela.");
+                return;
             }
         }
 
-        estrutura = novaEstrutura;
-        max_posicoes = novoTamanho;
+        if (tabelaExtra.contains(numero)) {
+            tabelaExtra.remove(Integer.valueOf(numero));
+            System.out.println("O elemento " + numero + " foi deletado da tabela extra.");
+            return;
+        }
+
+        System.out.println("O elemento " + numero + " não encontrado");
     }
 
-    public int quantidadeItens() {
-        int quantidade = 0;
-        for (LinkedList<AlunoHetero> lista : estrutura) {
-            quantidade += lista.size();
+    public boolean buscar(int numero) {
+
+        long startTime = System.nanoTime();
+
+        for (int i = 0; i < tamanho; i++) {
+            if (tabelaHash[i] == numero) {
+                System.out.println("O elemento " + numero + " foi encontrado na posição " + i + " na tabela hash principal.");
+                System.out.println(" ");
+
+                long endTime = System.nanoTime();
+                long timeElapsed = endTime - startTime;
+                System.out.println("Tempo de execução em nanossegundos: " + timeElapsed);
+
+                return true;
+            }
         }
-        return quantidade;
+
+        if (tabelaExtra.contains(numero)) {
+            int index = tabelaExtra.indexOf(numero);
+            System.out.println("O elemento " + numero + " foi encontrado na posição " + (index + tamanho) + " na tabela hash extra.");
+            System.out.println(" ");
+
+            long endTime = System.nanoTime();
+            long timeElapsed = endTime - startTime;
+            System.out.println("Tempo de execução em nanossegundos: " + timeElapsed);
+
+            return true;
+        }
+
+        System.out.println("O elemento " + numero + " não foi encontrado.");
+        System.out.println(" ");
+
+        long endTime = System.nanoTime();
+        long timeElapsed = endTime - startTime;
+        System.out.println("Tempo de execução em nanossegundos: " + timeElapsed);
+
+        return false;
+    }
+
+    public void imprimir() {
+        for (int i = 0; i < tamanho; i++) {
+            System.out.println(i + ": " + (tabelaHash[i] == -2 ? -1 : tabelaHash[i]));
+        }
+        System.out.println("TABELA HASH EXTRA:");
+        for (int i = 0; i < tabelaExtra.size(); i++) {
+            System.out.println((i + tamanho) + ": " + tabelaExtra.get(i));
+        }
     }
 }

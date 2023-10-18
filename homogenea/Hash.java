@@ -6,59 +6,59 @@ public class Hash {
 
     private int max_posicoes;
     private int quant_itens;
-    private Aluno[] estrutura;
+    private Chave[] estrutura;
     private int tamanho;
 
     public Hash(int tam_vetor) {
         tamanho = tam_vetor;
         quant_itens = 0;
         max_posicoes = tam_vetor;
-        estrutura = new Aluno[tamanho];
-        Arrays.fill(estrutura, new Aluno(-1)); // arrumar aqui para inicializar somente com números
+        estrutura = new Chave[tamanho];
+        Arrays.fill(estrutura, new Chave(-1)); // arrumar aqui para inicializar somente com números
     }
 
-    public int FuncaoHash(Aluno aluno) {
-        return (aluno.getRa() % max_posicoes);
+    public int FuncaoHash(Chave chave) {
+        return (chave.getNumero() % max_posicoes);
     }
 
     private void rehash() {
         int novoTamanho = max_posicoes * 2;
-        Aluno[] novaEstrutura = new Aluno[novoTamanho];
-        Arrays.fill(novaEstrutura, new Aluno(-1));
+        Chave[] novaEstrutura = new Chave[novoTamanho];
+        Arrays.fill(novaEstrutura, new Chave(-1));
 
-        for (Aluno aluno : estrutura) {
-            if (aluno.getRa() > 0) {
-                int local = FuncaoHash(aluno);
-                while (novaEstrutura[local].getRa() > 0) {
+        for (Chave chave : estrutura) {
+            if (chave.getNumero() > 0) {
+                int local = FuncaoHash(chave);
+                while (novaEstrutura[local].getNumero() > 0) {
                     local = (local + 1) % novoTamanho;
                 }
-                novaEstrutura[local] = aluno;
+                novaEstrutura[local] = chave;
             }
         }
 
         this.max_posicoes = novoTamanho;
         this.estrutura = novaEstrutura;
     }
-    public void inserir(Aluno aluno) {
+    public void inserir(Chave chave) {
         if ((quant_itens / max_posicoes) > 0.7) {
             rehash();
         }
 
-        int local = FuncaoHash(aluno);
-        while (estrutura[local].getRa() > 0) {
+        int local = FuncaoHash(chave);
+        while (estrutura[local].getNumero() > 0) {
             local = (local + 1) % max_posicoes;
         }
-        estrutura[local] = aluno;
+        estrutura[local] = chave;
         quant_itens++;
     }
 
-    public void deletar(Aluno aluno) {
-        int local = FuncaoHash(aluno);
+    public void deletar(Chave chave) {
+        int local = FuncaoHash(chave);
         boolean teste = false;
-        while (estrutura[local].getRa() != -1) {
-            if (estrutura[local].getRa() == aluno.getRa()) {
+        while (estrutura[local].getNumero() != -1) {
+            if (estrutura[local].getNumero() == chave.getNumero()) {
                 System.out.println("Elemento Removido!");
-                estrutura[local] = new Aluno(-2); // remove e troca o valor por -2
+                estrutura[local] = new Chave(-2); // remove e troca o valor por -2
                 quant_itens--;
                 teste = true;
                 break;
@@ -71,11 +71,11 @@ public class Hash {
         }
     }
 
-    public int buscar(Aluno aluno) {
-        int local = FuncaoHash(aluno);
+    public int buscar(Chave chave) {
+        int local = FuncaoHash(chave);
         int originalLocal = local;
-        while (estrutura[local].getRa() != -1) {
-            if (estrutura[local].getRa() == aluno.getRa()) {
+        while (estrutura[local].getNumero() != -1) {
+            if (estrutura[local].getNumero() == chave.getNumero()) {
                 return local; // Retorna o índice onde o elemento está armazenado
             }
             local = (local + 1) % max_posicoes;
@@ -83,15 +83,16 @@ public class Hash {
                 break;
             }
         }
+
         return -1; // Retorna -1 se o elemento não foi encontrado
     }
 
 
     public void imprimir() {
-        System.out.println("Tabela homogenea.Hash:");
+        System.out.println("Tabela Hash:");
         for (int i = 0; i < max_posicoes; i++) {
-            if (estrutura[i].getRa() > 0) {
-                System.out.println(i + ":" + estrutura[i].getRa());
+            if (estrutura[i].getNumero() > 0) {
+                System.out.println(i + ":" + estrutura[i].getNumero());
             }
         }
     }
