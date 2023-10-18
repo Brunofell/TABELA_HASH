@@ -7,18 +7,21 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("-----------------------------");
         System.out.println("- Programa gerador de Hash! -");
         System.out.println("- Digite o tamanho da Hash! -");
         System.out.println("-----------------------------");
-        System.out.print(">> ");
-        int tam_vetor = scanner.nextInt(); // 3
-
-        Hash alunohash = new Hash(tam_vetor);
-        HashHetero hashTable = new HashHetero(tam_vetor); // criou a hash desse tamanho ai
-
+        int tam_vetor;
+        do{
+            System.out.println(">>");
+            tam_vetor = scanner.nextInt();
+            if (tam_vetor <= 0){
+                System.out.println("Tamanho invalido, só é permitido valores maiores que zero");
+            }
+        }while (tam_vetor <= 0);
+            Hash alunohash = new Hash(tam_vetor);
+            HashHetero hashTable = new HashHetero(tam_vetor); // criou a hash desse tamanho ai
         int opcao;
         int num;
         boolean busca = true;
@@ -45,15 +48,20 @@ public class Main {
                     System.out.println("Qual número vai INSERIR? ");
                     System.out.print(">> ");
                     num = scanner.nextInt();
-                    Chave chave = new Chave(num);
-                    alunohash.inserir(chave);
+                    if (num < 0){
+                        System.out.println("Valor invalido, só é permitido numeros inteiros");
+                    }
+                    else{
+                        Chave chave = new Chave(num);
+                        alunohash.inserir(chave);
+                    }
                 } else if (opcao == 2) {
                     System.out.println("Qual número vai REMOVER? ");
                     System.out.print(">> ");
                     num = scanner.nextInt();
                     Chave chave = new Chave(num);
                     alunohash.deletar(chave);
-                }else if (opcao == 3) {
+                } else if (opcao == 3) {
                     System.out.println("Qual número vai BUSCAR? ");
                     System.out.print(">> ");
                     num = scanner.nextInt();
@@ -97,7 +105,12 @@ public class Main {
                     System.out.println("Qual número vai INSERIR? ");
                     System.out.print(">> ");
                     num = scanner.nextInt();
-                    hashTable.inserir(num);
+                    if (num < 0){
+                        System.out.println("Valor invalido, só é permitido numeros inteiros");
+                    }
+                    else{
+                        hashTable.inserir(num);
+                    }
                 } else if(opcao == 2){
                     System.out.println("Qual número vai REMOVER? ");
                     System.out.print(">> ");
