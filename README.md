@@ -1,7 +1,7 @@
-<h1 align="center" style="color: #6f42c1; margin-bottom: 20px;">    Implementação Tabela Hash em JAVA</h1>
+<h1 align="center" style="color: #6f42c1; margin-bottom: 20px;">Hash Table Implementation in JAVA</h1>
 
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-O algoritimo representa uma tabela hash, em que o usuário pode selecionar o tamanho da tabela e o tipo de tratamento de colisão:
+The algorithm represents a hash table, where the user can select the table size and the type of collision handling:
 </p>
 
 <br>
@@ -9,7 +9,7 @@ O algoritimo representa uma tabela hash, em que o usuário pode selecionar o tam
 <img src="/assets/img1.png">
 </p>
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-Se o usuário escolher a opção 1, INSERIR, ele poderá inserir um número inteiro na tabela:
+If the user chooses option 1, INSERT, they can insert an integer into the table:
 </p>
 
 <br>
@@ -20,7 +20,7 @@ Se o usuário escolher a opção 1, INSERIR, ele poderá inserir um número inte
 <img src="/assets/inserir.png">
 </p>
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-Na opção 2, o user poderá remover um elemento da tabela:
+In option 2, the user can remove an element from the table:
 </p>
 
 <br>
@@ -29,7 +29,7 @@ Na opção 2, o user poderá remover um elemento da tabela:
 <br>
 
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-O usuário também pode buscar um elemento e vizualizar o tempo de execução do metódo de busca:
+The user can also search for an element and view the execution time of the search method:
 </p>
 
 <br>
@@ -37,7 +37,7 @@ O usuário também pode buscar um elemento e vizualizar o tempo de execução do
 <img src="/assets/busca.png">
 </p>
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-O usuário pode vizualizar a tabela hash que está construindo:
+The user can view the hash table they are building:
 </p>
 
 <br>
@@ -46,14 +46,10 @@ O usuário pode vizualizar a tabela hash que está construindo:
 <img src="/assets/print2.png">
 </p>
 <p align="center" style="color: #6f42c1; line-height: 1.6;">
-E se digitar 0, ele encerrará o programa.
+And if they enter 0, the program will exit.
 </p>
 
 <br>
-<p align="center">
-<p align="center" style="color: #6f42c1; line-height: 1.6;">
-BRUNO FELICIANO & THIAGO LUZ.
-</p>
 <p align="center">
 <img src="/assets/bmo.gif">
 </p>
